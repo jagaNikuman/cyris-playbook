@@ -2,9 +2,9 @@
   vars:
     - username: root
   tasks:
-    - name: mkdir ssh
+    - name: mkdir .ssh
       file:
-        path=/{{ username }}/ansibletest
+        path=.ssh
         state=directory
         owner={{username}}
         group={{username}}
@@ -15,12 +15,19 @@
     - name: generate ssh key
       shell: ssh-keygen -t rsa -b 4096 -f /{{username}}/.ssh/id_rsa -q -N ""
       when: not fm.stat.exists
+    - name: mkdir cytrone
+      file:
+        path=cytrone/
+        state=directory
+        owner={{username}}
+        group={{username}}
+        mode=0755
     - name: check "already cloned cyris"
-      stat: path=cyris
+      stat: path=cytrone/cyris
       register: fm
     - name: git clone cyris
       when: not fm.stat.exists
       git:
         repo: "https://github.com/crond-jaist/cyris.git"
-        dest: /{{username}}/cyris
+        dest: cytrone/cyris
         version: master
