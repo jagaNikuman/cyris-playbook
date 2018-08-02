@@ -22,6 +22,20 @@
         owner={{username}}
         group={{username}}
         mode=0755
+    - name: mkdir cytrone/images
+      file:
+        path=cytrone/images
+        state=directory
+        owner={{username}}
+        group={{username}}
+        mode=0755
+    - name: download base image
+      get_url:
+        url=https://github.com/crond-jaist/cyris/releases/download/1.0/basevm.tgz
+        sha256sum=1c94d9350fd11dd18d421110fb305639f2ccbbd45fe78294d02ffe5f94ad4e71
+        dest=cytrone/images/basevm.tgz
+    - name: extract base image from download file
+      command: tar xf cytrone/images/basevm.tgz
     - name: check "already cloned cyris"
       stat: path=cytrone/cyris
       register: fm
