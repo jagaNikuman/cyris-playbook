@@ -1,6 +1,6 @@
 cyris-playbook
 ====
-Overview
+ansible playbook for build jaist-cyris
 
 ## Usage
 ```
